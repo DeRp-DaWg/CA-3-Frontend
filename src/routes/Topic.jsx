@@ -3,7 +3,7 @@ import { Container } from 'react-bootstrap'
 import { useLoaderData } from 'react-router-dom'
 import topicFecther from "../fetchers/topicFetcher"
 
-import UserTest from "./UserTest"
+import UserTest from "../components/UserTest"
 
 export default function Topic() {
   const {topic} = useLoaderData()
