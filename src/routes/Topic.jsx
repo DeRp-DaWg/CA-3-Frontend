@@ -3,6 +3,8 @@ import { Container } from 'react-bootstrap'
 import { useLoaderData } from 'react-router-dom'
 import topicFecther from "../fetchers/topicFetcher"
 
+import UserTest from "./UserTest"
+
 export default function Topic() {
   const {topic} = useLoaderData()
   
@@ -13,6 +15,8 @@ export default function Topic() {
       <p>{topic.example}</p>
       <p>{topic.formula}</p>
       <p>{topic.calculatorURL}</p>
+
+      <UserTest topic={topic.name} />
     </Container>
   )
 }
