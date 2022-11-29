@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import Root, { rootLoader } from './routes/Root'
 import Topic, { topicLoader } from './routes/Topic'
 import TopicErrorPage from './routes/TopicErrorPage'
+import Index from "./routes/Index"
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
         errorElement: <TopicErrorPage/>,
         loader: topicLoader,
         element: <Topic/>
+      },
+      {
+        path: "login",
+        element: <Index/>
       }
     ]
   }
