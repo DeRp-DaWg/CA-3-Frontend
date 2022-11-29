@@ -1,0 +1,19 @@
+{
+    "name": "Math",
+    "topics": [
+        {
+            "name": "Addition",
+            "description": "Addition in math is a process of combining two or more numbers...",
+            "example": "If you have 2 apples and somebody gives you 3 more apples...",
+            "formula": "a + b = c",
+            "calculatorURL": "/arithmetic/add"
+        },
+        {
+            "name": "Fibonacci",
+            "description": "The Fibonacci sequence is a set of integers (the Fibonacci numbers)...",
+            "example": "First 14 numbers: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233...",
+            "formula": "Fn = Fn-1 + Fn-2",
+            "calculatorURL": "/numbertheory/fibonacci/number"
+        }
+    ]
+}

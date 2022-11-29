@@ -2,6 +2,7 @@ import React from 'react'
 import { Container } from 'react-bootstrap'
 import { useLoaderData } from 'react-router-dom'
 import topicFecther from "../fetchers/topicFetcher"
+import Calculator from "../components/calculator"
 
 export default function Topic() {
   const {topic} = useLoaderData()
@@ -12,7 +13,8 @@ export default function Topic() {
       <p>{topic.description}</p>
       <p>{topic.example}</p>
       <p>{topic.formula}</p>
-      <p>{topic.calculatorURL}</p>
+      {/* <p>{topic.calculatorURL}</p> */}
+      <Calculator apiURL={topic.calculatorURL} calculatorData={topic.calculatorDTO.calculatorFieldDTOS}/>
     </Container>
   )
 }
