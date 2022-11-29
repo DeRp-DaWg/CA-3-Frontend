@@ -1,14 +1,28 @@
 import React, { useState } from 'react'
-import { Link, Outlet, useLoaderData } from 'react-router-dom'
+import { Link, Outlet, useLoaderData, NavLink } from 'react-router-dom'
 import { push as Menu } from "react-burger-menu"
 import topicFecther from "../fetchers/topicFetcher"
 import { Container } from 'react-bootstrap'
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
 
 export default function Root() {
   const [menuElements, setMenuElements] = useState(<></>)
   const {topics} = useLoaderData()
     
   return (
+    <>
+    <Navbar bg="dark" variant="dark">
+        <Container>
+          <Navbar.Brand>Guess that joke!</Navbar.Brand>
+        <Nav>
+          <Nav.Link as={NavLink} to="/">Home</Nav.Link>
+          <Nav.Link as={NavLink} to="/scoreboard">Scoreboard</Nav.Link>
+          <Nav.Link as={NavLink} to="/login">Log-in/out</Nav.Link>
+          <Nav.Link as={NavLink} to="/createacc">Create Account</Nav.Link>
+        </Nav>
+        </Container>
+    </Navbar>
     <div id="outer-container">
       <Menu pageWrapId="page-wrap" outerContainerId="outer-container">
         {topics.map((topic) => (
@@ -19,6 +33,7 @@ export default function Root() {
         <Outlet/>
       </main>
     </div>
+    </>
   )
 }
 

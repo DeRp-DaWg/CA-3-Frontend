@@ -224,7 +224,6 @@ const unAnsweredRow = Object.keys(answers).map((ele, index) =>
   )
 }
 
-
 // export async function topicLoader({params}) {
 //   const topic = await topicFecther.getTopic(params.topicName)
 //   if (topic.code === 500 || topic.code === 404) {
