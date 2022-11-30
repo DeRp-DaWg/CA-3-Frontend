@@ -6,11 +6,16 @@ const key = "8c81539974msh7d9376fb1d7e115p118063jsn874bc108c4c4"
 async function getCalculator(calculatorURL, parameters) {
   let queryParams = "?"
   parameters.forEach(param => {
-    let valueString = param.formula
-    const keys = Object.keys(param.values)
-    const values = Object.values(param.values)
-    for (let i = 0; i < keys.length; i++) {
-      valueString = valueString.replaceAll(keys[i], values[i])
+    let valueString = ""
+    if (param.isSingleInput) {
+      valueString = param.value
+    } else {
+      valueString = param.formula
+      const keys = Object.keys(param.values)
+      const values = Object.values(param.values)
+      for (let i = 0; i < keys.length; i++) {
+        valueString = valueString.replaceAll(keys[i], values[i])
+      }
     }
     queryParams += `${param.keyword}=${encodeURIComponent(valueString)}&`
   })
@@ -20,8 +25,13 @@ async function getCalculator(calculatorURL, parameters) {
   return result
 }
 
+async function getTestCalculator(calculatorURL, parameters) {
+  
+}
+
 const methods = {
-  getCalculator
+  getCalculator,
+  getTestCalculator
 }
 
 export default methods

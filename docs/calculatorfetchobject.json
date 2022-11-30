@@ -1,0 +1,4 @@
+[
+    {"keyword": "expression", "value": "1+2+3+4+5", "isSingleInput": true},
+    {"keyword": "expression2", "formula": "a+b", "values": {"a": "2", "b": "4"}, "isSingleInput": false}
+]
