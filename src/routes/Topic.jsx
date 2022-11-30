@@ -14,7 +14,7 @@ export default function Topic() {
       <p>{topic.description}</p>
       <p>{topic.example}</p>
       <p>{topic.formula}</p>
-      <Calculator apiURL={topic.calculatorURL} calculatorData={topic.calculatorDTO.calculatorFieldDTOS}/>
+      {/* <Calculator apiURL={topic.calculatorURL} calculatorData={topic.calculatorDTO.calculatorFieldDTOS}/> */}
       <UserTest topic={topic.name} />
     </Container>
   )

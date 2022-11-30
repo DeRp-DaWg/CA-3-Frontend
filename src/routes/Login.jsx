@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from "react"
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutlet, useOutletContext } from "react-router-dom";
 import facade from "../fetchers/apiFacade";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -57,6 +57,7 @@ function LoggedIn( { logout } ) {
 function LoginReturn() {
   const [content, setContent] = useState(<h4>Loading...</h4>);
   let navigate = useNavigate();
+  const props = useOutletContext();
 
   useEffect(() => {
     if(!facade.getLog()){
@@ -69,11 +70,13 @@ function LoginReturn() {
 
   const logout = async () => {
     await facade.logout();
+    props.setLog("Login");
     setContent(<LogIn login={login} />);
   } 
   const login = async (user, pass) => {
     setContent(<h4>Loading content...</h4>);
     await facade.login(user,pass);
+    props.setLog("Logout");
     navigate("/");
   } 
  

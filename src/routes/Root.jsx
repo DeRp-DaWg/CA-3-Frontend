@@ -5,10 +5,12 @@ import topicFecther from "../fetchers/topicFetcher"
 import { Container } from 'react-bootstrap'
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import facade from "../fetchers/apiFacade";
 
 export default function Root() {
   const [menuElements, setMenuElements] = useState(<></>)
   const {topics} = useLoaderData()
+  const [log, setLog] = useState("Login");
     
   return (
     <>
@@ -16,8 +18,9 @@ export default function Root() {
         <Container>
           <Navbar.Brand as={NavLink} to="/">Sub school</Navbar.Brand>
         <Nav>
-          <Nav.Link as={NavLink} to="/teacherPage">Teacher page</Nav.Link>
-          <Nav.Link as={NavLink} to="/login">Log-in/out</Nav.Link>
+          {facade.getLog() ? (<Nav.Link as={NavLink} to="/teacherPage">Teacher page</Nav.Link>) : (<Nav.Link></Nav.Link>)}
+          {/* <Nav.Link as={NavLink} to="/teacherPage">Teacher page</Nav.Link> */}
+          <Nav.Link as={NavLink} to="/login">{log}</Nav.Link>
         </Nav>
         </Container>
     </Navbar>
@@ -28,7 +31,7 @@ export default function Root() {
         ))}
       </Menu>
       <main id="page-wrap">
-        <Outlet/>
+        <Outlet context={{setLog}} />
       </main>
     </div>
     </>
