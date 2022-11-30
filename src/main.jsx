@@ -8,6 +8,9 @@ import Root, { rootLoader } from './routes/Root'
 import Topic, { topicLoader } from './routes/Topic'
 import TopicErrorPage from './routes/TopicErrorPage'
 import Index from "./routes/Index"
+import Login from "./routes/Login"
+import TeacherPage from "./routes/TeacherPage"
+import facade from "./fetchers/apiFacade"
 
 const router = createBrowserRouter([
   {
@@ -24,7 +27,12 @@ const router = createBrowserRouter([
       },
       {
         path: "login",
-        element: <Index/>
+        element: <Login/>
+      },
+      {
+        path: "teacherPage",
+        element: <TeacherPage />
+        // element: {facade.getLog() ? <TeacherPage /> : <Navigate replace to={"/"} />}
       }
     ]
   }
