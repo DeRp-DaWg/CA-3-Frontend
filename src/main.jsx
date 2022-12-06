@@ -10,7 +10,9 @@ import TopicErrorPage from './routes/TopicErrorPage'
 import Index from "./routes/Index"
 import Login from "./routes/Login"
 import TeacherPage from "./routes/TeacherPage"
-import facade from "./fetchers/apiFacade"
+import CalculatorEditor from './routes/CalculatorEditor'
+import TopicEditor from './routes/TopicEditor'
+import loaders from './loaders'
 
 const router = createBrowserRouter([
   {
@@ -19,6 +21,10 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage/>,
     loader: rootLoader,
     children: [
+      {
+        path: "",
+        element: <Index/>
+      },
       {
         path: "topic/:topicName",
         errorElement: <TopicErrorPage/>,
@@ -33,6 +39,26 @@ const router = createBrowserRouter([
         path: "teacherPage",
         element: <TeacherPage />
         // element: {facade.getLog() ? <TeacherPage /> : <Navigate replace to={"/"} />}
+      },
+      {
+        path: "teacherpage/createTopic",
+        loader: loaders.topicCreateLoader,
+        element: <TopicEditor/>
+      },
+      {
+        path: "teacherpage/editTopic/:topicName",
+        loader: loaders.topicEditLoader,
+        element: <TopicEditor/>
+      },
+      {
+        path: "teacherpage/createCalculator",
+        loader: loaders.calculatorCreateLoader,
+        element: <CalculatorEditor/>
+      },
+      {
+        path: "teacherpage/editCalculator/:calculatorName",
+        loader: loaders.calculatorEditLoader,
+        element: <CalculatorEditor/>
       }
     ]
   }

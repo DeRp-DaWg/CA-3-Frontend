@@ -14,14 +14,14 @@ export default function Topic() {
       <p>{topic.description}</p>
       <p>{topic.example}</p>
       <p>{topic.formula}</p>
-      <Calculator apiURL={topic.calculatorURL} calculatorData={topic.calculator}/>
+      {topic.calculator && <Calculator calculatorData={topic.calculator}/>}
       <UserTest topic={topic.name} />
     </Container>
   )
 }
 
 export async function topicLoader({params}) {
-  const topic = await topicFecther.getTopic(params.topicName)
+  const topic = await topicFecther.getTopicByName(params.topicName)
   if (topic.code === 500 || topic.code === 404) {
     throw new Response("Not Found", { status: 404 })
   }

@@ -75,9 +75,6 @@ export default function calculator(props) {
   
   function sendInformation(event) {
     event.preventDefault()
-    // let data = {}
-    console.log(fields)
-    console.log(inputValues)
     const data = fields.map(field => {
       const entry = {
         "keyword": field.keyword,
@@ -91,13 +88,13 @@ export default function calculator(props) {
       }
       return entry
     })
-    calculatorFecther.getCalculator(props.apiURL, data)
+    calculatorFecther.getCalculation(calculatorData.calculatorURL, data)
     .then(json => {
       setResult(json.Solution || "Invalid expression")
     }
     )
   }
-  
+    
   return (
     <div>
       <Form>

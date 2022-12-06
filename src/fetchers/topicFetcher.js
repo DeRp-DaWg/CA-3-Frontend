@@ -1,21 +1,26 @@
-import { fetchURL, dataFactory } from "./fetcherUtils"
+import { fetchURL, dataFactory, backendAPIURL } from "./fetcherUtils"
 
-const baseURL = "http://onebrightcreation.com:8081/CA-3/api/"
-// const baseURL = "http://localhost:8080/api/"
+// const baseURL = "http://onebrightcreation.com:8081/CA-3/api/"
 
 async function getTopics() {
-  const topics = fetchURL(baseURL+"topic/all")
+  const topics = fetchURL(backendAPIURL+"topic/all")
   return topics
 }
 
-async function getTopic(topicName) {
-  const topic = fetchURL(baseURL+"topic/"+topicName)
+async function getTopicByName(topicName) {
+  const topic = fetchURL(backendAPIURL+"topic/"+topicName)
   return topic
+}
+
+async function sendTopic(topicDTO, subject, method) {
+  const result = fetchURL(backendAPIURL+"topic/"+subject, dataFactory(method, topicDTO))
+  return result
 }
 
 const methods = {
   getTopics,
-  getTopic
+  getTopicByName,
+  sendTopic
 }
 
 export default methods

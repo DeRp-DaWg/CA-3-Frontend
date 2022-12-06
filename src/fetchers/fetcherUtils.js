@@ -1,3 +1,5 @@
+export const backendAPIURL = "http://localhost:8080/api/"
+
 export function fetchURL(URL, data) {
   if (!data) data = dataFactory("GET")
   return fetch(URL, data)
