@@ -1,6 +1,7 @@
 import { useState } from "react";
 
-const URL = "http://onebrightcreation.com:8081/CA-3";
+// const URL = "http://onebrightcreation.com:8081/CA-3";
+const URL = "http://localhost:8080/CA_3_war_exploded";
  
 function handleHttpErrors(res) {
  if (!res.ok) {
@@ -65,6 +66,21 @@ const createUser = async (user, password) => {
     await fetch(URL + "/api/user/create", options)
     .then(handleHttpErrors);
     return login(user, password);
+}
+
+const createTopic = async (name, description, example, formula, calculatorURL, calcName, tags, keyword, calcFormula, isSingleInput) => {
+  const options = makeOptions("POST", false,{name: name,
+  description: description,
+  example: example,
+  formula: formula,
+  calculatorURL: calculatorURL,
+  calcName: calcName,
+  tags: tags,
+  keyword: keyword,
+  calcFormula: calcFormula,
+  isSingleInput: isSingleInput});
+  return fetch(URL + "/api/topic", options)
+  .then(handleHttpErrors);
 }
 
 const updateScore = (value) => {
@@ -142,11 +158,9 @@ const makeOptions= (method,addToken,body) =>{
      login,
      logout,
      fetchData,
-     updateScore,
      getUser,
      createUser,
-     getHighscores,
-     getJokes
+     createTopic
  }
 }
 const facade = apiFacade();

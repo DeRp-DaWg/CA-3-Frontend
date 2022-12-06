@@ -45,18 +45,27 @@ function AddTopic({viewTopic}){
     example: "",
     formula: "",
     calculatorURL: "",
+    calcName: "",
+    tags: "",
+    keyword: "",
+    calcFormula: "",
+    isSingleInput: false
   }
   const [newTopic, setNewTopic] = useState(initTopic);
 
   const performAdd = (evt) => {
     evt.preventDefault();
     viewTopic(false);
+    facade.createTopic(newTopic.name, newTopic.description, newTopic.example,
+      newTopic.formula, newTopic.calculatorURL, newTopic.calcName, [newTopic.tags],
+      newTopic.keyword, newTopic.calcFormula, newTopic.isSingleInput);
     console.log(newTopic);
-    // Insert so it updates topic, on db
   }
 
   const onChange = (evt) => {
-    setNewTopic({...newTopic,[evt.target.id]: evt.target.value});
+    const target = evt.target;
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    setNewTopic({...newTopic,[evt.target.id]: value});
   }
 
   return(
@@ -82,6 +91,25 @@ function AddTopic({viewTopic}){
           <Form.Group className="mb-3" controlId="calculatorURL">
             <Form.Label>Add calculator URL</Form.Label>
             <Form.Control type="text" placeholder="Calc URL"/>
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="calcName">
+            <Form.Label>Add calculator name</Form.Label>
+            <Form.Control type="text" placeholder="Calc name"/>
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="tags">
+            <Form.Label>Add tag</Form.Label>
+            <Form.Control type="text" placeholder="Calc tag"/>
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="keyword">
+            <Form.Label>Add keyword</Form.Label>
+            <Form.Control type="text" placeholder="Calc keyword"/>
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="calcFormula">
+            <Form.Label>Add calculator formula</Form.Label>
+            <Form.Control type="text" placeholder="Calc formula"/>
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="isSingleInput">
+            <Form.Check type="checkbox" label="is single input" />
           </Form.Group>
           <Button onClick={performAdd} variant="primary" type="button">
             Submit
