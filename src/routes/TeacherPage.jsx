@@ -3,6 +3,7 @@ import facade from "../fetchers/apiFacade";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
+import { NavLink } from "react-router-dom";
 
 export function ChangePass({viewPass}){
 
@@ -234,8 +235,8 @@ export default function TeacherPage() {
 
       )}
       <br />
-      <Button onClick={addInit}>Click me</Button>
-      {content}
+      <br />
+      <Button as={NavLink} to="/teacherPage/createCalculator">Create new calculator</Button>
       </Container>
     </div>
   )

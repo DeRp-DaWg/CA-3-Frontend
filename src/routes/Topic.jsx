@@ -54,7 +54,7 @@ export default function Topic() {
       ) : (
           <>
             <h4>Calculator</h4>
-            <Calculator apiURL={topic.calculatorURL} calculatorData={topic.calculator}/>
+            {topic.calculator && <Calculator calculatorData={topic.calculator}/>}
             <br/>
             <br/>
             <Button onClick={setViewTest} variant="primary" type="button">
@@ -67,7 +67,7 @@ export default function Topic() {
 }
 
 export async function topicLoader({params}) {
-  const topic = await topicFecther.getTopic(params.topicName)
+  const topic = await topicFecther.getTopicByName(params.topicName)
   if (topic.code === 500 || topic.code === 404) {
     throw new Response("Not Found", { status: 404 })
   }

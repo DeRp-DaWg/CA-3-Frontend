@@ -1,3 +1,5 @@
+export const backendAPIURL = "http://onebrightcreation.com:8081/CA-3/api/"
+
 export function fetchURL(URL, data) {
   if (!data) data = dataFactory("GET")
   return fetch(URL, data)
