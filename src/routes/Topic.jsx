@@ -23,17 +23,17 @@ export default function Topic() {
   return (
     <Container>
       <Container as={Row}>
-        <Col sm="8">
+        <Col sm="10">
         <h1>{topic.name}</h1>
         </Col>
-        <Col sm="2">
+        <Col sm="1">
           <Container>
-            <Button onClick={deleteTopic} variant="outline-secondary"><MdDeleteForever size='1x' /></Button>
+            <Button onClick={deleteTopic} variant="outline-secondary"><MdDeleteForever style={{width: "3rem", height: "3rem"}} /></Button>
           </Container>      
         </Col>
-        <Col sm="2">
-        <Container>
-            <Button variant="outline-secondary"><MdEditNote size='1x' /></Button>
+        <Col sm="1">
+        <Container >
+            <Button variant="outline-secondary"><MdEditNote style={{width: "3rem", height: "3rem"}}/></Button>
         </Container>
         </Col>
       </Container>
