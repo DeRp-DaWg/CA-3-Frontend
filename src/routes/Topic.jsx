@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Container } from 'react-bootstrap'
-import { useRouteLoaderData, useNavigate } from 'react-router-dom'
+import { useRouteLoaderData, useNavigate, NavLink } from 'react-router-dom'
 import topicFecther from "../fetchers/topicFetcher"
 import apiFacade from "../fetchers/apiFacade";
 import Calculator from "../components/calculator"
@@ -33,7 +33,7 @@ export default function Topic() {
         </Col>
         <Col sm="1">
         <Container >
-            <Button variant="outline-secondary"><MdEditNote style={{width: "3rem", height: "3rem"}}/></Button>
+            <Button as={NavLink} to="edit" variant="outline-secondary"><MdEditNote style={{width: "3rem", height: "3rem"}}/></Button>
         </Container>
         </Col>
       </Container>
