@@ -47,7 +47,7 @@ export function ChangePass({viewPass}){
   );
 }
 
-export function AddTopic({viewTopic}){
+export function AddTopic({viewTopicgot}){
   
   const initTopic = {
     name: "",
