@@ -34,7 +34,7 @@ export default function Root() {
               {subject.topics.map((topic) => {
                 return(
                   <Fragment key={topic.name}>
-                  <Link to={`topic/${topic.name}`} className="menu-item" key={topic.name}>{topic.name}</Link>
+                  <Link to={`topic/${subject.name}/${topic.name}`} className="menu-item" key={topic.name}>{topic.name}</Link>
                   <br />
                   </Fragment>
                 )
