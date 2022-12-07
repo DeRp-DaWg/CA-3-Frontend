@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Calculator from '../fetchers/calculatorFetcher';
 import { useLoaderData } from 'react-router-dom'
 import topicFecther from "../fetchers/topicFetcher"
 
@@ -116,12 +117,21 @@ const onChange = (evt) => {
   setAnswers({...answers,[evt.target.id]: evt.target.value});
 }
 
-const onSubmit = (evt) => {
+const onSubmit = async (evt) => {
   evt.preventDefault();
   let list = [];
-  stringValAnswers.map((ele, index) => {
+  await stringValAnswers.map((ele, index) => {
     console.log(ele);
-    list.push(2 == answers[Object.keys(answers)[index]]); // Instead of 2, use Calculator(ele)
+    console.log(Calculator.getCalculation("/arithmetic/add", [{
+      keyword: "expression",
+      isSingleInput: true,
+      value: ele
+    }]).then(JSON => {return JSON.Solution}))
+    list.push(Calculator.getCalculation("/arithmetic/add", [{
+      keyword: "expression",
+      isSingleInput: true,
+      value: ele
+    }]) == answers[Object.keys(answers)[index]]); // Instead of 2, use Calculator(ele)
   });
   setBoolValAnswers(list);
   setIsAnswered(true);
