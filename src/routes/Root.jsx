@@ -27,20 +27,20 @@ export default function Root() {
     </Navbar>
     <div id="outer-container">
       <Menu pageWrapId="page-wrap" outerContainerId="outer-container">
-          {subjects.map((subject, subjectIndex) => {
-          return (
-            <Fragment key={subject.name}>
-            <h3>{subject.name}</h3>
-            {subject.topics.map((topic, topicIndex) => {
-              return(
-                <Fragment key={topic.name}>
-              <Link to={`topic/${topic.name}`} className="menu-item" key={topic.name}>{topic.name}</Link>
-              <br />
-              </Fragment>
-              )
+          {subjects.map((subject) => {
+            return (
+              <Fragment key={subject.name}>
+              <h3>{subject.name}</h3>
+              {subject.topics.map((topic) => {
+                return(
+                  <Fragment key={topic.name}>
+                  <Link to={`topic/${topic.name}`} className="menu-item" key={topic.name}>{topic.name}</Link>
+                  <br />
+                  </Fragment>
+                )
               })}
               <br/>
-            </Fragment>
+              </Fragment>
             )
           })}
       </Menu>
