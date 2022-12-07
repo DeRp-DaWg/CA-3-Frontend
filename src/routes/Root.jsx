@@ -15,7 +15,7 @@ export default function Root() {
     
   return (
     <>
-    <Navbar bg="dark" variant="dark" style={{position: "sticky", top: 0}}>
+    <Navbar bg="dark" variant="dark">
         <Container>
           <Navbar.Brand as={NavLink} to="/">Sub school</Navbar.Brand>
         <Nav>
@@ -26,7 +26,7 @@ export default function Root() {
         </Container>
     </Navbar>
     <div id="outer-container">
-      <Menu pageWrapId="page-wrap" outerContainerId="outer-container">
+      <Menu customCrossIcon={ false } pageWrapId="page-wrap" outerContainerId="outer-container">
           {subjects.map((subject) => {
             return (
               <Fragment key={subject.name}>
@@ -44,7 +44,7 @@ export default function Root() {
             )
           })}
       </Menu>
-      <main id="page-wrap">
+      <main id="page-wrap" style={{"maxHeight": "calc(100vh - 40px - 1rem)", "overflowY": "auto"}}>
         <Outlet context={{setLog}} />
       </main>
     </div>
