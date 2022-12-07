@@ -30,7 +30,7 @@ function LogIn({ login }) {
           <Form.Label>Password</Form.Label>
           <Form.Control type="password" placeholder="Enter password"/>
         </Form.Group>
-        <Button onClick={performLogin} variant="primary" type="button">
+        <Button onClick={performLogin} variant="primary" type="submit">
           Login
         </Button>
       </Form>
