@@ -9,7 +9,8 @@ import facade from "../fetchers/apiFacade";
 
 export default function Root() {
   const [menuElements, setMenuElements] = useState(<></>)
-  const {topics} = useLoaderData()
+  // const {topics} = useLoaderData()
+  const {subjects} = useLoaderData();
   const [log, setLog] = useState("Login");
     
   return (
@@ -26,9 +27,22 @@ export default function Root() {
     </Navbar>
     <div id="outer-container">
       <Menu pageWrapId="page-wrap" outerContainerId="outer-container">
-        {topics.map((topic) => (
-          <Link to={`topic/${topic.name}`} className="menu-item" key={topic.name}>{topic.name}</Link>
-        ))}
+          {subjects.map((subject) => {
+          return (
+            <>
+            <h3>{subject.name}</h3>
+            {subject.topics.map((topic) => {
+              return(
+                <>
+              <Link to={`topic/${topic.name}`} className="menu-item" key={topic.name}>{topic.name}</Link>
+              <br />
+              </>
+              )
+              })}
+              <br/>
+            </>
+            )
+          })}
       </Menu>
       <main id="page-wrap">
         <Outlet context={{setLog}} />
@@ -39,6 +53,8 @@ export default function Root() {
 }
 
 export async function rootLoader() {
-  const topics = await topicFecther.getTopics()
-  return {topics}
+  const subjects = await topicFecther.getSubjects(); // Implemented
+  // const topics = await topicFecther.getTopics()
+  // return {topics}
+  return {subjects}
 }

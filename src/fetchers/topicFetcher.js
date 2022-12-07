@@ -13,9 +13,21 @@ async function getTopic(topicName) {
   return topic
 }
 
+async function getSubjects() {
+  const topics = fetchURL(baseURL+"topic/allSubjects")
+  return topics
+}
+
+async function getSubject(topicName) {
+  const topic = fetchURL(baseURL+"topic/subject/"+topicName)
+  return topic
+}
+
 const methods = {
   getTopics,
-  getTopic
+  getTopic,
+  getSubjects,
+  getSubject
 }
 
 export default methods

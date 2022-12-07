@@ -4,9 +4,15 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 
-function ChangePass({viewPass}){
+export function ChangePass({viewPass}){
 
   const [newPassword, setNewPassword] = useState("");
+  const [formType, setFormType] = useState("password");
+
+  const changeType = () => {
+
+    setFormType()
+  }
 
   const performChange = (evt) => {
     evt.preventDefault();
@@ -16,6 +22,8 @@ function ChangePass({viewPass}){
   }
 
   const onChange = (evt) => {
+    const target = evt.target;
+    const value = target.type === "checkbox" ? target.checked : target.value;
     setNewPassword(evt.target.value);
   }
 
@@ -25,7 +33,10 @@ function ChangePass({viewPass}){
         <Form onChange={onChange} >
           <Form.Group className="mb-3" controlId="password">
             <Form.Label>New password</Form.Label>
-            <Form.Control type="text" placeholder="Enter password"/>
+            <Form.Control type="password" placeholder="Enter password"/>
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="skalNokLaveCheckbox">
+            <Form.Check type="checkbox" label="" />
           </Form.Group>
           <Button onClick={performChange} variant="primary" type="button">
             Submit
@@ -36,7 +47,7 @@ function ChangePass({viewPass}){
   );
 }
 
-function AddTopic({viewTopic}){
+export function AddTopic({viewTopic}){
   
   const initTopic = {
     name: "",
@@ -119,7 +130,7 @@ function AddTopic({viewTopic}){
   );
 }
 
-function CreateTeacher({viewTeacher}){
+export function CreateTeacher({viewTeacher}){
   
   const initTeacher = {
     username: "",
@@ -167,6 +178,16 @@ export default function TeacherPage() {
   const [viewTopic, setViewTopic] = useState(false);
   const [viewTeacher, setViewTeacher] = useState(false);
 
+  const [initString, setInitString] = useState("init mate");
+  const [content, setContent] = useState([initString])
+
+  const makeInput = () => {
+
+  }
+  const addInit = () => {
+    setContent([...content, initString]);
+  }
+
   return (
     <div>
       <Container fluid="xxl">
@@ -212,6 +233,9 @@ export default function TeacherPage() {
         </Button>
 
       )}
+      <br />
+      <Button onClick={addInit}>Click me</Button>
+      {content}
       </Container>
     </div>
   )
