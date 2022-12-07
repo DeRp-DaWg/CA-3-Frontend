@@ -15,7 +15,7 @@ export default function Root() {
     
   return (
     <>
-    <Navbar bg="dark" variant="dark">
+    <Navbar bg="dark" variant="dark" style={{position: "sticky", top: 0}}>
         <Container>
           <Navbar.Brand as={NavLink} to="/">Sub school</Navbar.Brand>
         <Nav>
