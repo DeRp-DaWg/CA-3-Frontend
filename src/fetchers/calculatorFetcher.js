@@ -25,8 +25,12 @@ async function getCalculation(calculatorURL, parameters) {
   return result
 }
 
-async function sendCalculator(calculatorDTO, method) {
+async function sendCalculator(calculatorDTO, isNewEntry) {
   // const headers = {"X-RapidAPI-Key": key}
+  let method = "PUT"
+  if (isNewEntry) {
+    method = "POST"
+  }
   const result = fetchURL(backendAPIURL+"calculator", dataFactory(method, calculatorDTO))
   return result
 }

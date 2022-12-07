@@ -1,12 +1,11 @@
 import React from 'react'
 import { Container } from 'react-bootstrap'
-import { useLoaderData } from 'react-router-dom'
-import topicFecther from "../fetchers/topicFetcher"
+import { useRouteLoaderData } from 'react-router-dom'
 import Calculator from "../components/calculator"
 import UserTest from "../components/UserTest"
 
 export default function Topic() {
-  const {topic} = useLoaderData()
+  const {topic} = useRouteLoaderData("topic")
   
   return (
     <Container>
@@ -18,12 +17,4 @@ export default function Topic() {
       <UserTest topic={topic.name} />
     </Container>
   )
-}
-
-export async function topicLoader({params}) {
-  const topic = await topicFecther.getTopicByName(params.topicName)
-  if (topic.code === 500 || topic.code === 404) {
-    throw new Response("Not Found", { status: 404 })
-  }
-  return {topic}
 }

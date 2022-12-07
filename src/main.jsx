@@ -5,7 +5,7 @@ import ErrorPage from "./routes/ErrorPage"
 import './index.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Root, { rootLoader } from './routes/Root'
-import Topic, { topicLoader } from './routes/Topic'
+import Topic from './routes/Topic'
 import TopicErrorPage from './routes/TopicErrorPage'
 import Index from "./routes/Index"
 import Login from "./routes/Login"
@@ -13,6 +13,56 @@ import TeacherPage from "./routes/TeacherPage"
 import CalculatorEditor from './routes/CalculatorEditor'
 import TopicEditor from './routes/TopicEditor'
 import loaders from './loaders'
+
+// const router = createBrowserRouter([
+//   {
+//     path: "/",
+//     element: <Root/>,
+//     errorElement: <ErrorPage/>,
+//     loader: rootLoader,
+//     children: [
+//       {
+//         path: "",
+//         element: <Index/>
+//       },
+//       {
+//         path: "topic/:topicName",
+//         errorElement: <TopicErrorPage/>,
+//         loader: topicLoader,
+//         element: <Topic/>
+//       },
+//       {
+//         path: "login",
+//         element: <Login />
+//       },
+//       {
+//         path: "teacherPage",
+//         element: <TeacherPage />
+//         // element: {facade.getLog() ? <TeacherPage /> : <Navigate replace to={"/"} />}
+//       },
+//       {
+//         path: "teacherpage/createTopic",
+//         loader: loaders.topicCreateLoader,
+//         element: <TopicEditor/>
+//       },
+//       {
+//         path: "teacherpage/editTopic/:topicName",
+//         loader: loaders.topicEditLoader,
+//         element: <TopicEditor/>
+//       },
+//       {
+//         path: "teacherpage/createCalculator",
+//         loader: loaders.calculatorCreateLoader,
+//         element: <CalculatorEditor/>
+//       },
+//       {
+//         path: "teacherpage/editCalculator/:calculatorName",
+//         loader: loaders.calculatorEditLoader,
+//         element: <CalculatorEditor/>
+//       }
+//     ]
+//   }
+// ])
 
 const router = createBrowserRouter([
   {
@@ -26,10 +76,35 @@ const router = createBrowserRouter([
         element: <Index/>
       },
       {
-        path: "topic/:topicName",
+        path: "topic/:subjectName/:topicName",
         errorElement: <TopicErrorPage/>,
-        loader: topicLoader,
-        element: <Topic/>
+        id: "topic",
+        loader: loaders.topicLoader,
+        children: [
+          {
+            path: "",
+            element: <Topic/>
+          },
+          {
+            path: "edit",
+            loader: loaders.calculatorNamesLoader,
+            element: <TopicEditor/>
+          }
+        ]
+      },
+      {
+        path: "calculator/:calculatorName",
+        id: "calculator",
+        loader: loaders.calculatorLoader,
+        children: [
+          {
+            path: ""
+          },
+          {
+            path: "edit",
+            element: <CalculatorEditor/>
+          }
+        ]
       },
       {
         path: "login",
@@ -41,23 +116,12 @@ const router = createBrowserRouter([
         // element: {facade.getLog() ? <TeacherPage /> : <Navigate replace to={"/"} />}
       },
       {
-        path: "teacherpage/createTopic",
-        loader: loaders.topicCreateLoader,
+        path: "createTopic",
+        loader: loaders.calculatorNamesLoader,
         element: <TopicEditor/>
       },
       {
-        path: "teacherpage/editTopic/:topicName",
-        loader: loaders.topicEditLoader,
-        element: <TopicEditor/>
-      },
-      {
-        path: "teacherpage/createCalculator",
-        loader: loaders.calculatorCreateLoader,
-        element: <CalculatorEditor/>
-      },
-      {
-        path: "teacherpage/editCalculator/:calculatorName",
-        loader: loaders.calculatorEditLoader,
+        path: "createCalculator",
         element: <CalculatorEditor/>
       }
     ]

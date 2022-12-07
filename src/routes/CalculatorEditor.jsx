@@ -1,12 +1,13 @@
 import React, { Fragment, useState } from 'react'
 import { useEffect } from 'react'
 import { Button, Container, Form, InputGroup } from 'react-bootstrap'
-import { useLoaderData, useNavigate } from 'react-router-dom'
+import { useLoaderData, useNavigate, useRouteLoaderData } from 'react-router-dom'
 import calculatorFetcher from "../fetchers/calculatorFetcher"
 
-export default function CreateCalculator() {
-  const {calculator, method} = useLoaderData()
-  const [calculatorDTO, setCalculatorDTO] = useState(calculator)
+export default function CalculatorEditor() {
+  // const {calculator} = useRouteLoaderData("calculator")
+  const loaderData = useRouteLoaderData("calculator")
+  const [calculatorDTO, setCalculatorDTO] = useState({name: "", calculatorURL: "", calculatorFields: []})
   const calculatorFieldTemplate = {
     id: null,
     keyword: "",
@@ -16,6 +17,15 @@ export default function CreateCalculator() {
   }
   const [fields, setFields] = useState([])
   const navigate = useNavigate()
+  
+  const [isNewEntry, setIsNewEntry] = useState(true)
+  
+  useEffect(() => {
+    if (loaderData) {
+      setCalculatorDTO(loaderData.calculator)
+      setIsNewEntry(false)
+    }
+  }, [])
   
   useEffect(() => {
     const calculatorFieldsDTO = calculatorDTO.calculatorFields
@@ -114,12 +124,9 @@ export default function CreateCalculator() {
   }
   
   function handleSubmit() {
-    const result = calculatorFetcher.sendCalculator(calculatorDTO, method)
-    console.log(calculatorDTO)
-    navigate("/teacherPage")
+    const result = calculatorFetcher.sendCalculator(calculatorDTO, isNewEntry)
+    navigate(-1)
   }
-  
-  const isNewEntry = (method === "POST")
   
   return (
     <Container>

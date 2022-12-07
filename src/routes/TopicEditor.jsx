@@ -2,19 +2,28 @@ import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { Button, ButtonGroup, Container, Form, ToggleButton } from 'react-bootstrap'
-import { useLoaderData } from 'react-router-dom'
-import loaders from '../loaders'
+import { useLoaderData, useNavigate, useParams, useRouteLoaderData } from 'react-router-dom'
 import topicFetcher from "../fetchers/topicFetcher"
 
 export default function TopicEditor() {
-  const {topic, method, calculatorNames} = useLoaderData()
-  const [topicDTO, setTopicDTO] = useState(topic)
-  const [subject, setSubject] = useState("")
+  const loaderData = useRouteLoaderData("topic")
+  const {calculatorNames} = useLoaderData()
+  const {subjectName} = useParams()
+  const [topicDTO, setTopicDTO] = useState({name: "", description: "", example: "", formula: "", calculator: {name: null}})
+  const [subject, setSubject] = useState(subjectName)
   const [filteredNames, setFilteredNames] = useState(calculatorNames)
   const [filter, setFilter] = useState("")
+  const navigate = useNavigate()
   
-  const isNewEntry = (method === "POST")
-
+  const [isNewEntry, setIsNewEntry] = useState(true)
+  
+  useEffect(() => {
+    if (loaderData) {
+      setIsNewEntry(false)
+      setTopicDTO(loaderData.topic)
+    }
+  }, [])
+  
   useEffect(() => {
     const newFilteredNames = calculatorNames.filter((name) => {
       if (name.toLowerCase().includes(filter.toLowerCase()) || topicDTO.calculator.name === name) return true
@@ -23,8 +32,8 @@ export default function TopicEditor() {
   }, [filter, topicDTO.calculator.name])
   
   function handleSubmit() {
-    console.log(topicDTO)
-    console.log(topicFetcher.sendTopic(topicDTO, subject, method))
+    const result = topicFetcher.sendTopic(topicDTO, subject, isNewEntry)
+    navigate(-1)
   }
   
   return (
