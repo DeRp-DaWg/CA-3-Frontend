@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-// const URL = "http://onebrightcreation.com:8081/CA-3";
-const URL = "http://localhost:8080/CA_3_war_exploded";
+const URL = "http://onebrightcreation.com:8081/CA-3";
+// const URL = "http://localhost:8080/CA_3_war_exploded";
  
 function handleHttpErrors(res) {
  if (!res.ok) {
@@ -83,55 +83,17 @@ const createTopic = async (name, description, example, formula, calculatorURL, c
   .then(handleHttpErrors);
 }
 
-const updateScore = (value) => {
-    const options = makeOptions("PUT", true,{isCorrect: value});
-    return fetch(URL + "/api/info", options)
-    .then(handleHttpErrors);
+const deleteTopic = async (name) => {
+  const options = makeOptions("DELETE",false,{name: name});
+  return fetch(URL + "/api/topic", options)
+  .then(handleHttpErrors);
 }
+
+
 
 const fetchData = () => {
   const options = makeOptions("GET",true); //True add's the token
    return fetch(URL + "/api/info/user", options).then(handleHttpErrors);
-}
-
-const getHighscores = async () => {
-    let users = [];
-    await fetch(URL + "/api/info/highscores?max=10",
-    {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json",
-        'Accept': 'application/json',
-      }
-    })
-    .then(handleHttpErrors)
-    .then(res => {
-      for(const ele of res){
-        users.push({username: ele.username, highscore: ele.highscore});
-      }
-    });
-        // .then(res => {return JSON.stringify(res)});
-    return users;
-}
-
-const getJokes = async () => {
-  let jokes = [];
-  await fetch(URL + "/api/jokes",
-  {
-    method: "GET",
-    headers: {
-      "Content-type": "application/json",
-      'Accept': 'application/json',
-    }
-  })
-  .then(handleHttpErrors)
-  .then(res => {
-    for(const ele of res){
-      jokes.push({name: ele.name, joke: ele.joke, answer: false});
-    
-    }
-  });
-  return jokes;
 }
 
 const makeOptions= (method,addToken,body) =>{
@@ -160,7 +122,8 @@ const makeOptions= (method,addToken,body) =>{
      fetchData,
      getUser,
      createUser,
-     createTopic
+     createTopic,
+     deleteTopic
  }
 }
 const facade = apiFacade();

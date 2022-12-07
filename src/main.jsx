@@ -9,10 +9,11 @@ import Topic from './routes/Topic'
 import TopicErrorPage from './routes/TopicErrorPage'
 import Index from "./routes/Index"
 import Login from "./routes/Login"
-import TeacherPage from "./routes/TeacherPage"
+import TeacherPage, {CreateTeacher, AddTopic, ChangePass} from "./routes/TeacherPage"
 import CalculatorEditor from './routes/CalculatorEditor'
 import TopicEditor from './routes/TopicEditor'
 import loaders from './loaders'
+import facade from "./fetchers/apiFacade"
 
 // const router = createBrowserRouter([
 //   {
@@ -113,6 +114,20 @@ const router = createBrowserRouter([
       {
         path: "teacherPage",
         element: <TeacherPage />
+        // children: [
+        //   {
+        //     path: "/changepw",
+        //     element: <ChangePass/>
+        //   },
+        //   {
+        //     path: "/addTopic",
+        //     element: <AddTopic/>
+        //   },
+        //   {
+        //     path: "/addTeacher",
+        //     element: <CreateTeacher/>
+        //   }
+        // ]
         // element: {facade.getLog() ? <TeacherPage /> : <Navigate replace to={"/"} />}
       },
       {

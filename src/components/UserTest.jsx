@@ -82,7 +82,7 @@ import topicFecther from "../fetchers/topicFetcher"
 //   )
 // }
 
-export default function UserTest( {topic} ) {
+export default function UserTest( {topic, viewT} ) {
 
     const init = { ans1: 0, ans2: 0, ans3: 0 };
     const [answers, setAnswers] = useState(init);
@@ -172,13 +172,17 @@ const firstContent = () => {
   )
 }
 
+const setViewTest = () => {
+  viewT(false);
+}
+
 const unAnsweredRow = Object.keys(answers).map((ele, index) => 
       // console.log(ele)
       <Form.Group key={ele} as={Row} className="mb-3" controlId={ele}>
-          <Form.Label>{stringValAnswers[index]} = </Form.Label>
-          {/* <Col sm="4"> */}
+          <Form.Label column sm="6">{stringValAnswers[index]} =</Form.Label>
+          <Col sm="4">
           <Form.Control type="number" placeholder="Enter answer"/>
-          {/* </Col> */}
+          </Col>
       </Form.Group>
     );
 
@@ -218,6 +222,10 @@ const unAnsweredRow = Object.keys(answers).map((ele, index) =>
             Submit answers
           </Button>
         </Form>
+        <br/>
+        <Button onClick={setViewTest} variant="primary" type="button">
+            Close test
+          </Button>
       </Container>
     )}
     </>

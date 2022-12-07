@@ -17,10 +17,22 @@ async function sendTopic(topicDTO, subject, method) {
   return result
 }
 
+async function getSubjects() {
+  const topics = fetchURL(backendAPIURL+"topic/allSubjects")
+  return topics
+}
+
+async function getSubject(topicName) {
+  const topic = fetchURL(backendAPIURL+"topic/subject/"+topicName)
+  return topic
+}
+
 const methods = {
   getTopics,
   getTopicByName,
-  sendTopic
+  sendTopic,
+  getSubjects,
+  getSubject
 }
 
 export default methods
