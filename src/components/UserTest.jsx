@@ -120,21 +120,19 @@ const onChange = (evt) => {
 const onSubmit = async (evt) => {
   evt.preventDefault();
   let list = [];
-  await stringValAnswers.map((ele, index) => {
+  stringValAnswers.map((ele, index) => {
     console.log(ele);
-    console.log(Calculator.getCalculation("/arithmetic/add", [{
+    Calculator.getCalculation("/arithmetic/add", [{
       keyword: "expression",
       isSingleInput: true,
       value: ele
-    }]).then(JSON => {return JSON.Solution}))
-    list.push(Calculator.getCalculation("/arithmetic/add", [{
-      keyword: "expression",
-      isSingleInput: true,
-      value: ele
-    }]) == answers[Object.keys(answers)[index]]); // Instead of 2, use Calculator(ele)
+    }])
+    .then(JSON => {
+      list.push(JSON.Solution == answers[Object.keys(answers)[index]]); // Instead of 2, use Calculator(ele)
+      setBoolValAnswers([...list]);
+      setIsAnswered(true);
+    })
   });
-  setBoolValAnswers(list);
-  setIsAnswered(true);
 }
 
 const topicSwitch = () => {
