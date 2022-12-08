@@ -1,7 +1,4 @@
-import { useState } from "react";
-
-const URL = "http://onebrightcreation.com:8081/CA-3";
-// const URL = "http://localhost:8080/CA_3_war_exploded";
+import { backendAPIURL } from "./fetcherUtils"
  
 function handleHttpErrors(res) {
  if (!res.ok) {
@@ -52,7 +49,7 @@ const getLog = () => {
 
 const login = (user, password) => {
     const options = makeOptions("POST", true,{username: user, password: password });
-    return fetch(URL + "/api/login", options)
+    return fetch(backendAPIURL + "login", options)
       .then(handleHttpErrors)
       .then(res => {
         setToken(res.token);
@@ -63,7 +60,7 @@ const login = (user, password) => {
 
 const createUser = async (user, password) => {
     const options = makeOptions("POST", false,{username: user, password: password});
-    await fetch(URL + "/api/user/create", options)
+    await fetch(backendAPIURL + "user/create", options)
     .then(handleHttpErrors);
     return login(user, password);
 }
@@ -79,13 +76,13 @@ const createTopic = async (name, description, example, formula, calculatorURL, c
   keyword: keyword,
   calcFormula: calcFormula,
   isSingleInput: isSingleInput});
-  return fetch(URL + "/api/topic", options)
+  return fetch(backendAPIURL + "topic", options)
   .then(handleHttpErrors);
 }
 
 const deleteTopic = async (name) => {
   const options = makeOptions("DELETE",false,{name: name});
-  return fetch(URL + "/api/topic", options)
+  return fetch(backendAPIURL + "topic", options)
   .then(handleHttpErrors);
 }
 
@@ -105,7 +102,7 @@ const createTeacher = async (name, password) => {
 
 const fetchData = () => {
   const options = makeOptions("GET",true); //True add's the token
-   return fetch(URL + "/api/info/user", options).then(handleHttpErrors);
+   return fetch(backendAPIURL + "info/user", options).then(handleHttpErrors);
 }
 
 const makeOptions= (method,addToken,body) =>{

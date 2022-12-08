@@ -12,7 +12,11 @@ async function getTopicByName(topicName) {
   return topic
 }
 
-async function sendTopic(topicDTO, subject, method) {
+async function sendTopic(topicDTO, subject, isNewEntry) {
+  let method = "PUT"
+  if (isNewEntry) {
+    method = "POST"
+  }
   const result = fetchURL(backendAPIURL+"topic/"+subject, dataFactory(method, topicDTO))
   return result
 }

@@ -20,7 +20,15 @@ export default function TopicEditor() {
   useEffect(() => {
     if (loaderData) {
       setIsNewEntry(false)
-      setTopicDTO(loaderData.topic)
+      setTopicDTO((oldDTO) => {
+        const newDTO = {...loaderData.topic}
+        if (!("calculator" in newDTO)) {
+          newDTO["calculator"] = {name: ""}
+        } else if (!("name" in newDTO.calculator)) {
+          newDTO["calculator"] = {name: ""}
+        }
+        return newDTO
+      })
     }
   }, [])
   
@@ -32,8 +40,12 @@ export default function TopicEditor() {
   }, [filter, topicDTO.calculator.name])
   
   function handleSubmit() {
-    const result = topicFetcher.sendTopic(topicDTO, subject, isNewEntry)
-    navigate(-1)
+    topicFetcher.sendTopic(topicDTO, subject, isNewEntry)
+    .then(response => {
+      console.log(response)
+      window.location.href = "./"
+      // navigate(-1)
+    })
   }
   
   return (
@@ -66,6 +78,15 @@ export default function TopicEditor() {
             {/* <Form.Label>Filter</Form.Label> */}
             <Form.Control value={filter} onChange={event => setFilter(event.target.value)}/>
           </Form.Group>
+          <ToggleButton
+              id={`radio--1`}
+              type="radio"
+              variant={'outline-danger'}
+              name="radio"
+              value={""}
+              checked={topicDTO.calculator.name === ""}
+              onChange={event => setTopicDTO({...topicDTO, calculator: {name: event.currentTarget.value}})}
+            >None</ToggleButton>
           {filteredNames.map((name, index) => (
             <ToggleButton
               key={index}

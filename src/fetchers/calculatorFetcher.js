@@ -5,6 +5,7 @@ const key = "8c81539974msh7d9376fb1d7e115p118063jsn874bc108c4c4"
 
 async function getCalculation(calculatorURL, parameters) {
   let queryParams = "?"
+  console.log(parameters)
   parameters.forEach(param => {
     let valueString = ""
     if (param.isSingleInput) {

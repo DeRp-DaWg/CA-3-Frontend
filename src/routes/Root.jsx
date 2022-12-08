@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react'
 import { Link, Outlet, useLoaderData, NavLink } from 'react-router-dom'
-import { push as Menu } from "react-burger-menu"
+import { slide as Menu } from "react-burger-menu"
 import topicFecther from "../fetchers/topicFetcher"
 import { Container } from 'react-bootstrap'
 import Nav from 'react-bootstrap/Nav';
@@ -26,7 +26,7 @@ export default function Root() {
         </Container>
     </Navbar>
     <div id="outer-container">
-      <Menu pageWrapId="page-wrap" outerContainerId="outer-container">
+      <Menu customCrossIcon={ false } pageWrapId="page-wrap" outerContainerId="outer-container">
           {subjects.map((subject) => {
             return (
               <Fragment key={subject.name}>
@@ -44,7 +44,7 @@ export default function Root() {
             )
           })}
       </Menu>
-      <main id="page-wrap">
+      <main id="page-wrap" style={{"maxHeight": "calc(100vh - 40px - 1rem)", "overflowY": "auto"}}>
         <Outlet context={{setLog}} />
       </main>
     </div>
