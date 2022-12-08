@@ -62,7 +62,7 @@ export default function CalculatorEditor() {
               {tags}
             </div>
             <Button onClick={() => createNewTag(fieldIndex)}>Create new tag</Button>
-            <Form.Check type="checkbox" label="Single input" onChange={event => {updateField(event, fieldIndex, "isSingleInput")}}/>
+            <Form.Check type="checkbox" label="Single input" checked={calculatorFieldsDTO[fieldIndex].isSingleInput} onChange={event => {updateField(event, fieldIndex, "isSingleInput")}}/>
             <Button className="mb-3" variant="danger" onClick={event => removeField(fieldIndex)}>Remove</Button>
           </Container>
         </div>
@@ -124,8 +124,12 @@ export default function CalculatorEditor() {
   }
   
   function handleSubmit() {
-    const result = calculatorFetcher.sendCalculator(calculatorDTO, isNewEntry)
-    navigate(-1)
+    calculatorFetcher.sendCalculator(calculatorDTO, isNewEntry)
+    .then(response => {
+      console.log(response)
+      // window.location.href = "./"
+      navigate(-1)
+    })
   }
   
   return (

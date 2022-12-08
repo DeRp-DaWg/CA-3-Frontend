@@ -13,7 +13,7 @@ import TeacherPage, {CreateTeacher, AddTopic, ChangePass} from "./routes/Teacher
 import CalculatorEditor from './routes/CalculatorEditor'
 import TopicEditor from './routes/TopicEditor'
 import loaders from './loaders'
-import facade from "./fetchers/apiFacade"
+import CalculatorList from "./routes/CalculatorList"
 
 // const router = createBrowserRouter([
 //   {
@@ -94,16 +94,26 @@ const router = createBrowserRouter([
         ]
       },
       {
-        path: "calculator/:calculatorName",
-        id: "calculator",
-        loader: loaders.calculatorLoader,
+        path: "calculator",
         children: [
           {
-            path: ""
+            path: "",
+            loader: loaders.calculatorNamesLoader,
+            element: <CalculatorList/>
           },
           {
-            path: "edit",
-            element: <CalculatorEditor/>
+            path: ":calculatorName",
+            id: "calculator",
+            loader: loaders.calculatorLoader,
+            children: [
+              {
+                path: "",
+              },
+              {
+                path: "edit",
+                element: <CalculatorEditor/>
+              }
+            ]
           }
         ]
       },
@@ -131,12 +141,12 @@ const router = createBrowserRouter([
         // element: {facade.getLog() ? <TeacherPage /> : <Navigate replace to={"/"} />}
       },
       {
-        path: "createTopic",
+        path: "teacherPage/createTopic",
         loader: loaders.calculatorNamesLoader,
         element: <TopicEditor/>
       },
       {
-        path: "createCalculator",
+        path: "teacherPage/createCalculator",
         element: <CalculatorEditor/>
       }
     ]

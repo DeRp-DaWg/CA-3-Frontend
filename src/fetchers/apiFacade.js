@@ -46,9 +46,23 @@ const getLog = () => {
   return loggedIn;
 }
 
+const getUserFromToken = (setLogginText) => {
+  setLog(true)
+  const options = makeOptions("POST", true)
+  return fetch(backendAPIURL + "user/verify", options)
+    .then(res => res.json())
+    .then(json => {
+      if ("code" in json) {
+        logout()
+      } else {
+        setUser(json.username)
+        setLogginText("Logout")
+      }
+    })
+}
 
 const login = (user, password) => {
-    const options = makeOptions("POST", true,{username: user, password: password });
+    const options = makeOptions("POST", false,{username: user, password: password });
     return fetch(backendAPIURL + "login", options)
       .then(handleHttpErrors)
       .then(res => {
@@ -59,14 +73,14 @@ const login = (user, password) => {
 }
 
 const createUser = async (user, password) => {
-    const options = makeOptions("POST", false,{username: user, password: password});
+    const options = makeOptions("POST", true,{username: user, password: password});
     await fetch(backendAPIURL + "user/create", options)
     .then(handleHttpErrors);
     return login(user, password);
 }
 
 const createTopic = async (name, description, example, formula, calculatorURL, calcName, tags, keyword, calcFormula, isSingleInput) => {
-  const options = makeOptions("POST", false,{name: name,
+  const options = makeOptions("POST", true,{name: name,
   description: description,
   example: example,
   formula: formula,
@@ -81,7 +95,7 @@ const createTopic = async (name, description, example, formula, calculatorURL, c
 }
 
 const deleteTopic = async (name) => {
-  const options = makeOptions("DELETE",false,{name: name});
+  const options = makeOptions("DELETE",true,{name: name});
   return fetch(backendAPIURL + "topic", options)
   .then(handleHttpErrors);
 }
@@ -101,7 +115,7 @@ const makeOptions= (method,addToken,body) =>{
        'Accept': 'application/json',
      }
    }
-   if (addToken && loggedIn) {
+   if (addToken) {
      opts.headers["x-access-token"] = getToken();
    }
    if (body) {
@@ -120,7 +134,8 @@ const makeOptions= (method,addToken,body) =>{
      getUser,
      createUser,
      createTopic,
-     deleteTopic
+     deleteTopic,
+     getUserFromToken
  }
 }
 const facade = apiFacade();

@@ -1,4 +1,5 @@
 import { fetchURL, dataFactory, backendAPIURL } from "./fetcherUtils"
+import apiFacade from "./apiFacade"
 
 const baseThirdPartyAPIURL = "https://math7.p.rapidapi.com"
 const key = "8c81539974msh7d9376fb1d7e115p118063jsn874bc108c4c4"
@@ -32,7 +33,8 @@ async function sendCalculator(calculatorDTO, isNewEntry) {
   if (isNewEntry) {
     method = "POST"
   }
-  const result = fetchURL(backendAPIURL+"calculator", dataFactory(method, calculatorDTO))
+  const headers = {"x-access-token": apiFacade.getToken()}
+  const result = fetchURL(backendAPIURL+"calculator", dataFactory(method, calculatorDTO, headers))
   return result
 }
 
@@ -44,16 +46,17 @@ async function getCalculatorByName(name) {
   return fetchURL(backendAPIURL+"calculator/"+name)
 }
 
-async function getTestCalculator(calculatorURL, parameters) {
-  
+async function deleteCalculator(name) {
+  const headers = {"x-access-token": apiFacade.getToken()}
+  return fetchURL(backendAPIURL+"calculator/"+name, dataFactory("DELETE", null, headers))
 }
 
 const methods = {
   getCalculation,
-  getTestCalculator,
   sendCalculator,
   getAllCalculatorNames,
-  getCalculatorByName
+  getCalculatorByName,
+  deleteCalculator
 }
 
 export default methods

@@ -5,7 +5,7 @@ import { Button, ButtonGroup, Container, Form, ToggleButton } from 'react-bootst
 import { useLoaderData, useNavigate, useParams, useRouteLoaderData } from 'react-router-dom'
 import topicFetcher from "../fetchers/topicFetcher"
 
-export default function TopicEditor() {
+export default function TopicEditor(props) {
   const loaderData = useRouteLoaderData("topic")
   const {calculatorNames} = useLoaderData()
   const {subjectName} = useParams()
@@ -14,6 +14,7 @@ export default function TopicEditor() {
   const [filteredNames, setFilteredNames] = useState(calculatorNames)
   const [filter, setFilter] = useState("")
   const navigate = useNavigate()
+  const setTopic = props.setTopic
   
   const [isNewEntry, setIsNewEntry] = useState(true)
   

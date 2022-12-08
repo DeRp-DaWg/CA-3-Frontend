@@ -6,20 +6,36 @@ import { Container } from 'react-bootstrap'
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import facade from "../fetchers/apiFacade";
+import { useEffect } from 'react'
 
 export default function Root() {
   const [menuElements, setMenuElements] = useState(<></>)
   // const {topics} = useLoaderData()
   const {subjects} = useLoaderData();
   const [log, setLog] = useState("Login");
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  
+  useEffect(() => {
+    if (facade.getToken() !== null) {
+      facade.getUserFromToken(setLog)
+    }
+  }, [isLoggedIn])
+  
+  useEffect(() => {
+    if (log === "Login") {
+      setIsLoggedIn(false)
+    } else {
+      setIsLoggedIn(true)
+    }
+  }, [log])
     
   return (
     <>
     <Navbar bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand as={NavLink} to="/">Sub school</Navbar.Brand>
+          <Navbar.Brand as={NavLink} to="/" style={{"position": "sticky", "left": "62px"}}>Sub school</Navbar.Brand>
         <Nav>
-          {facade.getLog() ? (<Nav.Link as={NavLink} to="/teacherPage">Teacher page</Nav.Link>) : (<Nav.Link></Nav.Link>)}
+          {isLoggedIn ? (<Nav.Link as={NavLink} to="/teacherPage">Teacher page</Nav.Link>) : (<Nav.Link></Nav.Link>)}
           {/* <Nav.Link as={NavLink} to="/teacherPage">Teacher page</Nav.Link> */}
           <Nav.Link as={NavLink} to="/login">{log}</Nav.Link>
         </Nav>
