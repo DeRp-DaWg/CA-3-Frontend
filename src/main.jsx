@@ -9,7 +9,7 @@ import Topic from './routes/Topic'
 import TopicErrorPage from './routes/TopicErrorPage'
 import Index from "./routes/Index"
 import Login from "./routes/Login"
-import TeacherPage, {CreateTeacher, AddTopic, ChangePass} from "./routes/TeacherPage"
+import TeacherPage, {CreateTeacher, ChangePass} from "./routes/TeacherPage"
 import CalculatorEditor from './routes/CalculatorEditor'
 import TopicEditor from './routes/TopicEditor'
 import loaders from './loaders'
@@ -123,6 +123,8 @@ const router = createBrowserRouter([
       },
       {
         path: "teacherPage",
+        id: "teacherPage",
+        loader: loaders.calculatorNamesLoader,
         element: <TeacherPage />,
         children: [
           {
@@ -130,8 +132,8 @@ const router = createBrowserRouter([
             element: <ChangePass/>
           },
           {
-            path: "addTopic",
-            element: <AddTopic/>
+            path: "createTopic",
+            element: <TopicEditor/>
           },
           {
             path: "addTeacher",
@@ -139,19 +141,14 @@ const router = createBrowserRouter([
           },
           {
             path: "createCalculator",
-            element: <ChangePass/>
+            element: <CalculatorEditor/>
+          },
+          {
+            path: "calculatorList",
+            element: <CalculatorList/>
           }
         ]
         // element: {facade.getLog() ? <TeacherPage /> : <Navigate replace to={"/"} />}
-      },
-      {
-        path: "teacherPage/createTopic",
-        loader: loaders.calculatorNamesLoader,
-        element: <TopicEditor/>
-      },
-      {
-        path: "teacherPage/createCalculator",
-        element: <CalculatorEditor/>
       }
     ]
   }

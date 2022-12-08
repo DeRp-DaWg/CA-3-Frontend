@@ -6,12 +6,14 @@ import { useLoaderData, useNavigate, useParams, useRouteLoaderData } from 'react
 import topicFetcher from "../fetchers/topicFetcher"
 
 export default function TopicEditor(props) {
-  const loaderData = useRouteLoaderData("topic")
-  const {calculatorNames} = useLoaderData()
+  const topicData = useRouteLoaderData("topic")
+  const calculatorData = useRouteLoaderData("teacherPage")
+  const localData = useLoaderData()
   const {subjectName} = useParams()
-  const [topicDTO, setTopicDTO] = useState({name: "", description: "", example: "", formula: "", calculator: {name: null}})
+  const [topicDTO, setTopicDTO] = useState({name: "", description: "", example: "", formula: "", calculator: {name: ""}})
   const [subject, setSubject] = useState(subjectName)
-  const [filteredNames, setFilteredNames] = useState(calculatorNames)
+  const [calculatorNames, setCalculatorNames] = useState([])
+  const [filteredNames, setFilteredNames] = useState([])
   const [filter, setFilter] = useState("")
   const navigate = useNavigate()
   const setTopic = props.setTopic
@@ -19,10 +21,10 @@ export default function TopicEditor(props) {
   const [isNewEntry, setIsNewEntry] = useState(true)
   
   useEffect(() => {
-    if (loaderData) {
+    if (topicData) {
       setIsNewEntry(false)
-      setTopicDTO((oldDTO) => {
-        const newDTO = {...loaderData.topic}
+      setTopicDTO(() => {
+        const newDTO = {...topicData.topic}
         if (!("calculator" in newDTO)) {
           newDTO["calculator"] = {name: ""}
         } else if (!("name" in newDTO.calculator)) {
@@ -31,6 +33,11 @@ export default function TopicEditor(props) {
         return newDTO
       })
     }
+    if (calculatorData) {
+      setCalculatorNames(calculatorData.calculatorNames)
+    } else {
+      setCalculatorNames(localData.calculatorNames)
+    }
   }, [])
   
   useEffect(() => {
@@ -38,14 +45,14 @@ export default function TopicEditor(props) {
       if (name.toLowerCase().includes(filter.toLowerCase()) || topicDTO.calculator.name === name) return true
     })
     setFilteredNames(newFilteredNames)
-  }, [filter, topicDTO.calculator.name])
+  }, [filter, topicDTO.calculator.name, calculatorNames])
   
   function handleSubmit() {
     topicFetcher.sendTopic(topicDTO, subject, isNewEntry)
     .then(response => {
       console.log(response)
-      window.location.href = "./"
-      // navigate(-1)
+      // window.location.href = "./"
+      navigate("/teacherPage")
     })
   }
   
@@ -80,7 +87,7 @@ export default function TopicEditor(props) {
             <Form.Control value={filter} onChange={event => setFilter(event.target.value)}/>
           </Form.Group>
           <ToggleButton
-              id={`radio--1`}
+              id={`calculator-radio-none`}
               type="radio"
               variant={'outline-danger'}
               name="radio"
@@ -91,7 +98,7 @@ export default function TopicEditor(props) {
           {filteredNames.map((name, index) => (
             <ToggleButton
               key={index}
-              id={`radio-${index}`}
+              id={`calculator-radio-${index}`}
               type="radio"
               variant={'outline-success'}
               name="radio"

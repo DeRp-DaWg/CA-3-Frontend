@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from 'react'
 import { useEffect } from 'react'
 import { Button, Container, Form, InputGroup } from 'react-bootstrap'
+import { MdDelete } from 'react-icons/md'
 import { useLoaderData, useNavigate, useRouteLoaderData } from 'react-router-dom'
 import calculatorFetcher from "../fetchers/calculatorFetcher"
 
@@ -38,7 +39,7 @@ export default function CalculatorEditor() {
               <Form.Label>{isSingleInput ? "Symbol" : "Tag"} {tagIndex+1}</Form.Label>
               <InputGroup>
                 <Form.Control value={calculatorFieldsDTO[fieldIndex].tags[tagIndex]} onChange={event => {updateTagField(event, fieldIndex, tagIndex)}}/>
-                <Button variant="danger" tabIndex={1} onClick={event => removeTag(fieldIndex, tagIndex)}>Remove</Button>
+                <Button variant="danger" tabIndex={1} onClick={event => removeTag(fieldIndex, tagIndex)}><MdDelete/></Button>
               </InputGroup>
             </Form.Group>
           </Container>
@@ -63,7 +64,7 @@ export default function CalculatorEditor() {
             </div>
             <Button onClick={() => createNewTag(fieldIndex)}>Create new tag</Button>
             <Form.Check type="checkbox" label="Single input" checked={calculatorFieldsDTO[fieldIndex].isSingleInput} onChange={event => {updateField(event, fieldIndex, "isSingleInput")}}/>
-            <Button className="mb-3" variant="danger" onClick={event => removeField(fieldIndex)}>Remove</Button>
+            <Button className="mb-3" variant="danger" onClick={event => removeField(fieldIndex)}><MdDelete/></Button>
           </Container>
         </div>
         </Fragment>
@@ -128,7 +129,7 @@ export default function CalculatorEditor() {
     .then(response => {
       console.log(response)
       // window.location.href = "./"
-      navigate(-1)
+      navigate("/teacherPage")
     })
   }
   

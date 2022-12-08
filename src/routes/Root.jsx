@@ -60,7 +60,7 @@ export default function Root() {
             )
           })}
       </Menu>
-      <main id="page-wrap" style={{"maxHeight": "calc(100vh - 40px - 1rem)", "overflowY": "auto"}}>
+      <main id="page-wrap" style={{"maxHeight": "calc(100vh - 40px - 1rem)", "overflowY": "auto", "paddingBottom": "50px"}}>
         <Outlet context={{setLog}} />
       </main>
     </div>

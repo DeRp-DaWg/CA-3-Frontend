@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { Link, Outlet, useLoaderData, NavLink } from 'react-router-dom'
+import { Outlet, NavLink, } from 'react-router-dom'
 
 export function ChangePass(){
 
@@ -38,9 +38,6 @@ export function ChangePass(){
           <Form.Group className="mb-3" controlId="password">
             <Form.Label>New password</Form.Label>
             <Form.Control type="password" placeholder="Enter password"/>
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="skalNokLaveCheckbox">
-            <Form.Check type="checkbox" label="" />
           </Form.Group>
           <Button onClick={performChange} variant="primary" type="button">
             Submit
@@ -187,7 +184,8 @@ export default function TeacherPage() {
     viewPass: false,
     viewTopic: false,
     viewTeacher: false,
-    viewCalculator: false
+    viewCalculator: false,
+    viewCalculatorList: false
   }
 
   const [viewObject, setViewObject] = useState(initObject);
@@ -204,6 +202,9 @@ export default function TeacherPage() {
     }
     else if(id === "viewTeacher"){
       setViewObject({...viewObject,[id]: !viewObject.viewTeacher});
+    }
+    else if(id === "viewCalculatorList"){
+      setViewObject({...viewObject,[id]: !viewObject.viewCalculatorList});
     }
     else{
       setViewObject({...viewObject,[id]: !viewObject.viewCalculator});
@@ -226,14 +227,13 @@ export default function TeacherPage() {
   }
 
   return (
-    <div>
-      <Container fluid="xxl">
-        <br/>
-        <Container fluid>
-          <h3>Teacher page</h3>
-        </Container>
-        <br/>
-        <Container as={Row}>
+    <Container fluid="xxl">
+      <br/>
+      <Container fluid>
+        <h3>Teacher page</h3>
+      </Container>
+      <br/>
+      <Container as={Row}>
         <Col sm="3">
           <Container >
             {viewObject.viewPass ? (
@@ -250,7 +250,7 @@ export default function TeacherPage() {
               <Button id="viewTopic" onClick={opposite} as={NavLink} to="" variant="outline-secondary">Close new topic</Button>
             ) : 
             (
-              <Button id="viewTopic" onClick={opposite} as={NavLink} to="addTopic" variant="outline-secondary">Add new topic</Button>
+              <Button id="viewTopic" onClick={opposite} as={NavLink} to="createTopic" variant="outline-secondary">Create new topic</Button>
             )}
           </Container>    
         </Col>
@@ -260,7 +260,7 @@ export default function TeacherPage() {
           <Button id="viewTeacher" onClick={opposite} as={NavLink} to="" variant="outline-secondary">Close new teacher</Button>
         ) : 
         (
-          <Button id="viewTeacher" onClick={opposite} as={NavLink} to="addTeacher" variant="outline-secondary">Add new teacher</Button>
+          <Button id="viewTeacher" onClick={opposite} as={NavLink} to="addTeacher" variant="outline-secondary">Create new teacher</Button>
         )}
         </Container>
         </Col>
@@ -271,6 +271,16 @@ export default function TeacherPage() {
         ) : 
         (
           <Button id="viewCalculator" onClick={opposite} as={NavLink} to="createCalculator" variant="outline-secondary">Create new calculator</Button>
+        )}
+        </Container>
+        </Col>
+        <Col sm="3">
+        <Container >
+        {viewObject.viewCalculatorList ? (
+          <Button id="viewCalculatorList" onClick={opposite} as={NavLink} to="" variant="outline-secondary">Close view calculators</Button>
+        ) : 
+        (
+          <Button id="viewCalculatorList" onClick={opposite} as={NavLink} to="calculatorList" variant="outline-secondary">View calculators</Button>
         )}
         </Container>
         </Col>
@@ -319,7 +329,6 @@ export default function TeacherPage() {
       <br />
       <br />
       <Button as={NavLink} to="/teacherPage/createCalculator">Create new calculator</Button> */}
-      </Container>
-    </div>
+    </Container>
   )
 }

@@ -103,14 +103,14 @@ const deleteTopic = async (name) => {
 const updatePassword = async (password) => {
   const user = getUser();
   console.log(user);
-  const options = makeOptions("PUT", false,{name: user, password: password});
-  return fetch(URL+ "/api/user", options)
+  const options = makeOptions("PUT", true,{name: user, password: password});
+  return fetch(backendAPIURL + "user", options)
   .then(handleHttpErrors);
 }
 
 const createTeacher = async (name, password) => {
-  const options = makeOptions("POST", false,{name: name, password: password});
-  return fetch(URL+ "/api/user", options)
+  const options = makeOptions("POST", true,{name: name, password: password});
+  return fetch(backendAPIURL + "user", options)
   .then(handleHttpErrors);
 }
 
