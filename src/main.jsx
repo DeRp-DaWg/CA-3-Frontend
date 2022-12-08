@@ -113,21 +113,25 @@ const router = createBrowserRouter([
       },
       {
         path: "teacherPage",
-        element: <TeacherPage />
-        // children: [
-        //   {
-        //     path: "/changepw",
-        //     element: <ChangePass/>
-        //   },
-        //   {
-        //     path: "/addTopic",
-        //     element: <AddTopic/>
-        //   },
-        //   {
-        //     path: "/addTeacher",
-        //     element: <CreateTeacher/>
-        //   }
-        // ]
+        element: <TeacherPage />,
+        children: [
+          {
+            path: "changepw",
+            element: <ChangePass/>
+          },
+          {
+            path: "addTopic",
+            element: <AddTopic/>
+          },
+          {
+            path: "addTeacher",
+            element: <CreateTeacher/>
+          },
+          {
+            path: "createCalculator",
+            element: <ChangePass/>
+          }
+        ]
         // element: {facade.getLog() ? <TeacherPage /> : <Navigate replace to={"/"} />}
       },
       {

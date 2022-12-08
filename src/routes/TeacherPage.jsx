@@ -3,9 +3,11 @@ import facade from "../fetchers/apiFacade";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
-import { NavLink } from "react-router-dom";
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import { Link, Outlet, useLoaderData, NavLink } from 'react-router-dom'
 
-export function ChangePass({viewPass}){
+export function ChangePass(){
 
   const [newPassword, setNewPassword] = useState("");
   const [formType, setFormType] = useState("password");
@@ -17,7 +19,8 @@ export function ChangePass({viewPass}){
 
   const performChange = (evt) => {
     evt.preventDefault();
-    viewPass(false);
+    // viewPass(false);
+    facade.updatePassword(newPassword);
     console.log(newPassword);
     // Insert so it updates password, on db
   }
@@ -48,7 +51,7 @@ export function ChangePass({viewPass}){
   );
 }
 
-export function AddTopic({viewTopicgot}){
+export function AddTopic(){
   
   const initTopic = {
     name: "",
@@ -66,7 +69,7 @@ export function AddTopic({viewTopicgot}){
 
   const performAdd = (evt) => {
     evt.preventDefault();
-    viewTopic(false);
+    // viewTopic(false);
     facade.createTopic(newTopic.name, newTopic.description, newTopic.example,
       newTopic.formula, newTopic.calculatorURL, newTopic.calcName, [newTopic.tags],
       newTopic.keyword, newTopic.calcFormula, newTopic.isSingleInput);
@@ -131,7 +134,7 @@ export function AddTopic({viewTopicgot}){
   );
 }
 
-export function CreateTeacher({viewTeacher}){
+export function CreateTeacher(){
   
   const initTeacher = {
     username: "",
@@ -142,7 +145,8 @@ export function CreateTeacher({viewTeacher}){
 
   const performAdd = (evt) => {
     evt.preventDefault();
-    viewTeacher(false);
+    // viewTeacher(false);
+    facade.createTeacher(newTeacher.username, newTeacher.password);
     console.log(newTeacher);
     // Insert so it updates teacher, on db
     // like so -> createAccount = facade.createUser(user, pass);
@@ -175,34 +179,112 @@ export function CreateTeacher({viewTeacher}){
 }
 
 export default function TeacherPage() {
-  const [viewPass, setViewPass] = useState(false);
-  const [viewTopic, setViewTopic] = useState(false);
-  const [viewTeacher, setViewTeacher] = useState(false);
+  // const [viewPass, setViewPass] = useState(false);
+  // const [viewTopic, setViewTopic] = useState(false);
+  // const [viewTeacher, setViewTeacher] = useState(false);
 
-  const [initString, setInitString] = useState("init mate");
-  const [content, setContent] = useState([initString])
-
-  const makeInput = () => {
-
+  const initObject = {
+    viewPass: false,
+    viewTopic: false,
+    viewTeacher: false,
+    viewCalculator: false
   }
-  const addInit = () => {
-    setContent([...content, initString]);
+
+  const [viewObject, setViewObject] = useState(initObject);
+
+
+  const opposite = (evt) => {
+    // console.log(evt.target.id);
+    const id = evt.target.id;
+    if(id === "viewPass"){
+      setViewObject({...viewObject,[id]: !viewObject.viewPass});
+    }
+    else if(id === "viewTopic"){
+      setViewObject({...viewObject,[id]: !viewObject.viewTopic});
+    }
+    else if(id === "viewTeacher"){
+      setViewObject({...viewObject,[id]: !viewObject.viewTeacher});
+    }
+    else{
+      setViewObject({...viewObject,[id]: !viewObject.viewCalculator});
+    }
+    // switch(evt.target.id){
+    //   case "viewPass": !viewObject.viewPass;
+    //   case "viewTopic": return(!viewObject.viewTopic);
+    //   case "viewTeacher": return(!viewObject.viewTeacher);
+    // }
+    console.log("Console: "+evt.target.id);
+    // setViewObject({...viewObject,[evt.target.id]: });
+    // setViewPass(!viewPass);
+    // if(viewPass){
+    //   setViewPass(false);
+    // }
+    // else{
+    //   setViewPass(true);
+    // }
+    // console.log(viewPass);
   }
 
   return (
     <div>
       <Container fluid="xxl">
+        <br/>
         <Container fluid>
           <h3>Teacher page</h3>
         </Container>
-        <br />
-        <br />
-      {viewPass ? (
+        <br/>
+        <Container as={Row}>
+        <Col sm="3">
+          <Container >
+            {viewObject.viewPass ? (
+              <Button id="viewPass" onClick={opposite} as={NavLink} to="" variant="outline-secondary">Close password</Button>
+            ) : 
+            (
+              <Button id="viewPass" onClick={opposite} as={NavLink} to="changepw" variant="outline-secondary">Change password</Button>
+            )} 
+          </Container>
+        </Col>
+        <Col sm="3">
+          <Container >
+          {viewObject.viewTopic ? (
+              <Button id="viewTopic" onClick={opposite} as={NavLink} to="" variant="outline-secondary">Close new topic</Button>
+            ) : 
+            (
+              <Button id="viewTopic" onClick={opposite} as={NavLink} to="addTopic" variant="outline-secondary">Add new topic</Button>
+            )}
+          </Container>    
+        </Col>
+        <Col sm="3">
+        <Container >
+        {viewObject.viewTeacher ? (
+          <Button id="viewTeacher" onClick={opposite} as={NavLink} to="" variant="outline-secondary">Close new teacher</Button>
+        ) : 
+        (
+          <Button id="viewTeacher" onClick={opposite} as={NavLink} to="addTeacher" variant="outline-secondary">Add new teacher</Button>
+        )}
+        </Container>
+        </Col>
+        <Col sm="3">
+        <Container >
+        {viewObject.viewCalculator ? (
+          <Button id="viewCalculator" onClick={opposite} as={NavLink} to="" variant="outline-secondary">Close new calculator</Button>
+        ) : 
+        (
+          <Button id="viewCalculator" onClick={opposite} as={NavLink} to="createCalculator" variant="outline-secondary">Create new calculator</Button>
+        )}
+        </Container>
+        </Col>
+      </Container>
+      <br />
+      <br />
+      <Outlet />
+        
+      {/* {viewPass ? (
         <Container>
           <ChangePass viewPass={setViewPass} />
-          {/* <Button onClick={setViewPass} variant="primary" type="button">
+          <Button onClick={setViewPass} variant="primary" type="button">
             Close password
-          </Button> */}
+          </Button> 
         </Container>
       ) : (
         <Button onClick={setViewPass} variant="primary" type="button">
@@ -236,7 +318,7 @@ export default function TeacherPage() {
       )}
       <br />
       <br />
-      <Button as={NavLink} to="/teacherPage/createCalculator">Create new calculator</Button>
+      <Button as={NavLink} to="/teacherPage/createCalculator">Create new calculator</Button> */}
       </Container>
     </div>
   )
