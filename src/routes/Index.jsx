@@ -1,7 +1,10 @@
 import React from 'react'
+import { Container } from 'react-bootstrap'
 
 export default function index() {
   return (
-    <div>index</div>
+    <Container>
+      Welcome!
+    </Container>
   )
 }

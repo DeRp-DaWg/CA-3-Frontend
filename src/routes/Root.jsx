@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react'
 import { Link, Outlet, useLoaderData, NavLink } from 'react-router-dom'
-import { push as Menu } from "react-burger-menu"
+import { slide as Menu } from "react-burger-menu"
 import topicFecther from "../fetchers/topicFetcher"
 import { Container } from 'react-bootstrap'
 import Nav from 'react-bootstrap/Nav';

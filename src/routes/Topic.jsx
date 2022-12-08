@@ -22,21 +22,13 @@ export default function Topic() {
   
   return (
     <Container>
-      <Container as={Row}>
-        <Col sm="10">
+      <div style={{"display": "flex"}}>
         <h1>{topic.name}</h1>
-        </Col>
-        <Col sm="1">
-          <Container>
-            <Button onClick={deleteTopic} variant="outline-secondary"><MdDeleteForever style={{width: "3rem", height: "3rem"}} /></Button>
-          </Container>      
-        </Col>
-        <Col sm="1">
-        <Container >
-            <Button as={NavLink} to="edit" variant="outline-secondary"><MdEditNote style={{width: "3rem", height: "3rem"}}/></Button>
-        </Container>
-        </Col>
-      </Container>
+        <div style={{"display": "flex", "flex": 1, "justifyContent": "right"}}>
+          <Button onClick={deleteTopic} variant="outline-secondary"><MdDeleteForever style={{width: "3rem", height: "3rem"}} /></Button>
+          <Button as={NavLink} to="edit" variant="outline-secondary"><MdEditNote style={{width: "3rem", height: "3rem"}}/></Button>
+        </div>
+      </div>
       <h4>Description</h4>
       <p>{topic.description}</p>
       <h4>Example</h4>
