@@ -100,7 +100,19 @@ const deleteTopic = async (name) => {
   .then(handleHttpErrors);
 }
 
+const updatePassword = async (password) => {
+  const user = getUser();
+  console.log(user);
+  const options = makeOptions("PUT", false,{name: user, password: password});
+  return fetch(URL+ "/api/user", options)
+  .then(handleHttpErrors);
+}
 
+const createTeacher = async (name, password) => {
+  const options = makeOptions("POST", false,{name: name, password: password});
+  return fetch(URL+ "/api/user", options)
+  .then(handleHttpErrors);
+}
 
 const fetchData = () => {
   const options = makeOptions("GET",true); //True add's the token
@@ -135,6 +147,8 @@ const makeOptions= (method,addToken,body) =>{
      createUser,
      createTopic,
      deleteTopic,
+     updatePassword,
+     createTeacher,
      getUserFromToken
  }
 }
